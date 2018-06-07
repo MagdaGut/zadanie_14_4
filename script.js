@@ -71,21 +71,24 @@ var MovieDescription = React.createClass({
   }
 });
 
-var moviesElements = movies.map(function(movie) {
-  return React.createElement(Movie, {key: movie.id, movie: movie});
-});
+var MoviesList = React.createClass({
+  propTypes: {
+    movies: React.PropTypes.array.isRequired
+  },
 
-// do zrobienia
-// komponent MoviesList
-// on przyjmuje w propsie tablicę wszystkich filmów
-// w funkcji render() kod z 74. - 76. ze zmianą `movies` na podanego propsa
-// na końcu w return zwróć proszę `ul` i jako jego dziecko moviesElements
+  render: function() {
+    var moviesElements = this.props.movies.map(function(movie) {
+      return React.createElement(Movie, {key: movie.id, movie: movie});
+    });
+
+    return React.createElement('ul', {}, moviesElements);
+  }
+});
 
 var element =
   React.createElement('div', {},
     React.createElement('h1', {}, 'Lista filmów'),
-    // tutaj będzie do wywołania nowy komponent MoviesList
-    React.createElement('ul', {}, moviesElements)
+    React.createElement(MoviesList, {movies: movies})
 );
 
 ReactDOM.render(element, document.getElementById('app'));
